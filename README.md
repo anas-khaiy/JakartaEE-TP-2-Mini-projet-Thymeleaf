@@ -48,7 +48,7 @@ Configuration Spring Boot via application.properties.
 
 ## 3. Fonctionnalités principales
 
--CRUD sur les entités principales
+- CRUD sur les entités principales
 Employé : création, modification, suppression, consultation des informations (nom, département, date d’embauche).
 Type de congé : gestion des types de congé avec quota annuel et libellé.
 Demande de congé : ajout, modification, suppression, consultation des demandes avec tous les détails (date_debut, date_fin, type de congé, motif, statut, employé).
