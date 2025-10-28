@@ -98,6 +98,35 @@ Les statistiques et les filtres tiennent compte du statut actuel.
 - Schéma ER : Employe (1) ────< (N) DemandeConge (N) >──── (1) TypeConge
 
 
+## 4.3 Configuration base de données
+- URL de connexion.
+  pring.datasource.url = jdbc:mysql://localhost:3306/ProjetThymeleaf1?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+- Identifiants / mot de passe (pour les tests).
+  spring.datasource.username = root
+  spring.datasource.password =
+- Stratégie de génération des tables (`spring.jpa.hibernate.ddl-auto`).
+  spring.jpa.hibernate.ddl-auto = update
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
