@@ -96,7 +96,8 @@ Les statistiques et les filtres tiennent compte du statut actuel.
 - Employe / DemandeConge : @ManyToOne => Un employé peut faire plusieurs demandes de congé + Chaque demande de congé appartient à un seul employé.
 - TypeConge / DemandeConge :  @ManyToOne => Un type de congé (ex. congé annuel) peut être utilisé dans plusieurs demandes + Chaque demande de congé est liée à un seul type de congé.
 - Schéma ER : Employe (1) ────< (N) DemandeConge (N) >──── (1) TypeConge
-
+- Modél relationnel
+<img width="2202" height="822" alt="image" src="https://github.com/user-attachments/assets/5a66ce2d-935b-4b16-b8a4-aeb5f187f864" />
 
 ## 4.3 Configuration base de données
 - URL de connexion.
