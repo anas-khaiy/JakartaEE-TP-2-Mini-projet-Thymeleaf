@@ -33,3 +33,17 @@ Maven pour la gestion des dépendances et le packaging de l’application.
 Configuration Spring Boot via application.properties.
 
 
+## 2.2 Structure du code
+- `entity/` : DemandeConge - Employe - EmployeTypeCongePK - TypeConge > classes JPA.
+- `repository/`:  DemandeCongeRepository - EmployeRepository - TypeCongeRepository > interfaces d'accès aux données.
+- `service/` : -.
+- `controller/` : ChartsController - DemandeCongeController - EmployeController - TypeCongeController > contrôleurs web MVC.
+- `templates/` : vues Thymeleaf (html).
+- `static/` : CSS, JS, images.
+
+
+## 2.3 Diagramme d’architecture 
+- Flux : navigateur → contrôleur Spring → service → repository → base de données → retour vue Thymeleaf.
+<img width="2460" height="312" alt="image" src="https://github.com/user-attachments/assets/ff7f73b0-4553-478a-bb61-8083ba2e1e39" />
+
+
