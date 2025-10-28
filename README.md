@@ -46,4 +46,43 @@ Configuration Spring Boot via application.properties.
 - Flux : navigateur → contrôleur Spring → service → repository → base de données → retour vue Thymeleaf.
 <img width="2460" height="312" alt="image" src="https://github.com/user-attachments/assets/ff7f73b0-4553-478a-bb61-8083ba2e1e39" />
 
+## 3. Fonctionnalités principales
+
+-CRUD sur les entités principales
+Employé : création, modification, suppression, consultation des informations (nom, département, date d’embauche).
+Type de congé : gestion des types de congé avec quota annuel et libellé.
+Demande de congé : ajout, modification, suppression, consultation des demandes avec tous les détails (date_debut, date_fin, type de congé, motif, statut, employé).
+Recherche / filtrage
+
+- Filtrage des demandes par :
+Département de l’employé
+Type de congé
+Dates de début et fin
+Statut de la demande (EN_ATTENTE, ACCEPTEE, REFUSEE, ANNULEE)
+
+- Tableau de bord / statistiques
+Jours de congé consommés par département : graphique en barres.
+Répartition des demandes par statut : graphique circulaire (pie chart).
+Demandes par type de congé : graphique doughnut.
+Évolution des demandes par mois : graphique en ligne (line chart).
+
+- Gestion des statuts
+Modification automatique ou manuelle du statut des demandes (EN_ATTENTE, ACCEPTEE, REFUSEE, ANNULEE).
+Les statistiques et les filtres tiennent compte du statut actuel.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
