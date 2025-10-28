@@ -91,7 +91,11 @@ Les statistiques et les filtres tiennent compte du statut actuel.
 - statut : état actuel de la demande (EN_ATTENTE, ACCEPTEE, REFUSEE, ANNULEE)
 
 
-
+## 4.2 Relations
+- les relations (`@OneToMany`, `@ManyToOne`, `@ManyToMany`) : 
+- Employe / DemandeConge : @ManyToOne => Un employé peut faire plusieurs demandes de congé + Chaque demande de congé appartient à un seul employé.
+- TypeConge / DemandeConge :  @ManyToOne => Un type de congé (ex. congé annuel) peut être utilisé dans plusieurs demandes + Chaque demande de congé est liée à un seul type de congé.
+- Schéma ER : Employe (1) ────< (N) DemandeConge (N) >──── (1) TypeConge
 
 
 
