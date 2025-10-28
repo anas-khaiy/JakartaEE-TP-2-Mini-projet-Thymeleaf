@@ -107,8 +107,26 @@ Les statistiques et les filtres tiennent compte du statut actuel.
 - Stratégie de génération des tables (`spring.jpa.hibernate.ddl-auto`).
   spring.jpa.hibernate.ddl-auto = update
 
+# 5. Lancer le projet
+## 5.1 Prérequis
+- Java version requise (21).
+- Maven(Maven 3.9.11).
 
+## 5.2 Installation
+- Cloner le dépôt.
+- Configurer `application.properties`.
+- Lancer l'application (`mvn spring-boot:run` ou exécuter la classe main).
 
+## 5.3 Accès
+- URL d'accès à l'application http://localhost:8080/.
+- URL du tableau de bord / statistiques (http://localhost:8080/charts).
+
+# 6. Démonstration (Vidéo)
+https://www.youtube.com/watch?v=I2vzgu6-Cqs
+
+# 7. Auteurs / Encadrement
+- Anas Khaiy
+- Encadrant : Dr. Mohamed LACHGAR / module : Développement Web et multiplateforme / établissement : ENS Marrakech.
 
 
 
