@@ -1,0 +1,322 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tableau de Bord - Demandes de Congé</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <style>
+    /* CSS for the sticky form on the left */
+    .sticky-top-custom {
+        top: 20px;
+    }
+  </style>
+</head>
+
+<body class="pb-5">
+
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+
+<div class="p-3 p-md-5">
+  <div class="container-fluid container-lg">
+    <header class="text-center mb-5">
+      <h1 class="display-5 fw-bolder text-primary mb-2">Gestion des Demandes de Congé</h1>
+    </header>
+
+    <div class="row g-4">
+
+      <div class="col-lg-4">
+        <div class="card p-4 bg-white card-custom h-100 sticky-top-custom">
+          <h2 class="h4 fw-semibold mb-4 text-dark">Modifer une Demande de Congé</h2>
+
+          <form th:action="@{/addDemandeConge}"
+                th:object="${demandeConge}" method="post" id="add-demande-form" class="space-y-4">
+
+            <input type="hidden" th:field="*{employeTypeCongePK.employeId}" />
+            <input type="hidden" th:field="*{employeTypeCongePK.typeCongeId}" />
+            <input type="hidden" th:field="*{employeTypeCongePK.dateDebut}" />
+
+            <div th:if="${#fields.hasErrors('global')}" class="alert alert-danger" role="alert">
+              <p th:each="err : ${#fields.errors('global')}" th:text="${err}"></p>
+            </div>
+
+            <div class="mb-3">
+              <label for="employeId" class="form-label text-sm text-secondary mb-1">Employé</label>
+              <select th:field="*{employeTypeCongePK.employeId}" id="employeId" required disabled
+                      class="form-control" th:classappend="${#fields.hasErrors('employeTypeCongePK.employeId')} ? 'is-invalid' : ''" style="border-radius: 0.5rem;">
+                <option value="">-- Sélectionnez un employé --</option>
+                <option th:each="emp : ${employes}"
+                        th:value="${emp.id}"
+                        th:text="${emp.nom}"></option>
+              </select>
+              <div class="invalid-feedback" th:if="${#fields.hasErrors('employeTypeCongePK.employeId')}" th:errors="*{employeTypeCongePK.employeId}">Employé Error</div>
+            </div>
+
+            <div class="mb-3">
+              <label for="typeCongeId" class="form-label text-sm text-secondary mb-1">Type de Congé</label>
+              <select th:field="*{employeTypeCongePK.typeCongeId}" id="typeCongeId" required disabled
+                      class="form-control" th:classappend="${#fields.hasErrors('employeTypeCongePK.typeCongeId')} ? 'is-invalid' : ''" style="border-radius: 0.5rem;">
+                <option value="">-- Sélectionnez le type de congé --</option>
+                <option th:each="tc : ${typeConges}"
+                        th:value="${tc.id}"
+                        th:text="${tc.libelle}"></option>
+              </select>
+              <div class="invalid-feedback" th:if="${#fields.hasErrors('employeTypeCongePK.typeCongeId')}" th:errors="*{employeTypeCongePK.typeCongeId}">Type Congé Error</div>
+            </div>
+
+            <div class="mb-3">
+              <label for="dateDebut" class="form-label text-sm text-secondary mb-1">Date de Début</label>
+              <input th:field="*{employeTypeCongePK.dateDebut}"  type="date" id="dateDebut" required disabled
+                     class="form-control" th:classappend="${#fields.hasErrors('employeTypeCongePK.dateDebut')} ? 'is-invalid' : ''" style="border-radius: 0.5rem;">
+              <div class="invalid-feedback" th:if="${#fields.hasErrors('employeTypeCongePK.dateDebut')}" th:errors="*{employeTypeCongePK.dateDebut}">Date Début Error</div>
+            </div>
+
+            <div class="mb-3">
+
+              <label for="dateFin" class="form-label text-sm text-secondary mb-1">Date de Fin</label>
+              <input th:field="*{dateFin}"  type="date" id="dateFin" required
+                     class="form-control" th:classappend="${#fields.hasErrors('dateFin')} ? 'is-invalid' : ''" style="border-radius: 0.5rem;">
+              <div class="invalid-feedback" th:if="${#fields.hasErrors('dateFin')}" th:errors="*{dateFin}">Date Fin Error</div>
+            </div>
+
+            <div class="mb-3">
+              <label for="statut" class="form-label text-sm text-secondary mb-1">Statut de la Demande</label>
+              <select th:field="*{statut}" id="statut" required
+                      class="form-control" th:classappend="${#fields.hasErrors('statut')} ? 'is-invalid' : ''" style="border-radius: 0.5rem;">
+                <option value="">-- Sélectionner le Statut --</option>
+                <option value="EN_ATTENTE">EN ATTENTE (Pending)</option>
+                <option value="ACCEPTEE">ACCEPTEE (Accepted)</option>
+                <option value="REFUSEE">REFUSEE (Rejected)</option>
+                <option value="ANNULEE">ANNULEE (Canceled)</option>
+              </select>
+              <div class="invalid-feedback" th:if="${#fields.hasErrors('statut')}" th:errors="*{statut}">Statut Error</div>
+            </div>
+            <div class="mb-4">
+              <label for="motif" class="form-label text-sm text-secondary mb-1">Motif</label>
+              <textarea th:field="*{motif}" id="motif" rows="3" required
+                        class="form-control" th:classappend="${#fields.hasErrors('motif')} ? 'is-invalid' : ''" style="border-radius: 0.5rem;"></textarea>
+              <div class="invalid-feedback" th:if="${#fields.hasErrors('motif')}" th:errors="*{motif}">Motif Error</div>
+            </div>
+
+            <button type="submit"
+                    class="btn btn-primary w-100 py-2 fw-medium shadow-sm">
+              Modifer la Demande
+            </button>
+            <div id="status-message" class="text-sm text-center mt-2 d-none"></div>
+          </form>
+        </div>
+      </div>
+
+      <div class="col-lg-8">
+        <div class="card p-4 bg-white card-custom">
+
+          <form method="get" th:action="@{/demandeCongeFilter}" id="filter-demande-form" class="mb-4">
+            <div class="d-flex flex-column flex-md-row gap-3 align-items-end">
+
+              <div class="flex-fill w-100">
+                <label class="form-label text-sm text-secondary mb-1">Département</label>
+                <input type="text" name="departement" class="form-control" placeholder="Nom du département">
+              </div>
+
+              <div class="flex-fill w-100">
+                <label class="form-label text-sm text-secondary mb-1">Type de congé</label>
+                <select name="typeCongeId" class="form-select">
+                  <option value="">Tous</option>
+                  <option th:each="tc : ${typeConges}" th:value="${tc.id}" th:text="${tc.libelle}"></option>
+                </select>
+              </div>
+
+              <div class="flex-fill w-100">
+                <label class="form-label text-sm text-secondary mb-1">Début</label>
+                <input type="date" name="dateDebut" class="form-control">
+              </div>
+              <div class="flex-fill w-100">
+                <label class="form-label text-sm text-secondary mb-1">Fin</label>
+                <input type="date" name="dateFin" class="form-control">
+              </div>
+
+              <div class="flex-fill w-100">
+                <label class="form-label text-sm text-secondary mb-1">Statut</label>
+                <select name="statut" class="form-select">
+                  <option value="">Tous</option>
+                  <option value="EN_ATTENTE">EN ATTENTE (Pending)</option>
+                  <option value="ACCEPTEE">ACCEPTEE (Accepted)</option>
+                  <option value="REFUSEE">REFUSEE (Rejected)</option>
+                  <option value="ANNULEE">ANNULEE (Canceled)</option>
+                </select>
+              </div>
+
+              <button type="submit" class="btn btn-primary w-100 py-2 fw-medium shadow-sm w-md-auto" style="min-width: 150px;">
+                Filtrer
+              </button>
+
+            </div>
+          </form>
+          <hr class="mb-4 mt-0"/>
+
+          <h2 class="h4 fw-semibold mb-4 text-dark">Liste des Demandes de Congé (<span th:text="${totalElements != null ? totalElements : 0}" id="demande-count">0</span>)</h2>
+
+          <div class="table-responsive d-none d-md-block">
+            <table class="table table-hover align-middle mb-0">
+              <thead class="table-light">
+              <tr class="text-start text-xs text-primary text-uppercase tracking-wider">
+                <th scope="col" class="py-3 px-3">Employé</th>
+                <th scope="col" class="py-3 px-3">Type Congé</th>
+                <th scope="col" class="py-3 px-3">Début / Fin</th>
+                <th scope="col" class="py-3 px-3">Motif</th>
+                <th scope="col" class="py-3 px-3">Statut</th>
+                <th scope="col" class="py-3 px-3 text-end">Actions</th>
+              </tr>
+              </thead>
+              <tbody id="demande-list-desktop">
+
+              <tr th:each="demande : ${demandes}">
+                <td th:text="${demande.employe.nom}"></td>
+                <td th:text="${demande.typeConge.libelle}"></td>
+                <td>
+                  <span th:text="${#dates.format(demande.employeTypeCongePK.dateDebut, 'dd-MM-yyyy')}"></span>
+                  <br>à<br>
+                  <span th:text="${#dates.format(demande.dateFin, 'dd-MM-yyyy')}"></span>
+                </td>
+                <td th:text="${demande.motif}"></td>
+                <td th:text="${demande.statut}"></td>
+                <td class="text-end">
+                  <div class="btn-group" role="group">
+                    <a th:href="@{/editDemandeConge/{empId}/{typeId}/{dateDebut}(
+                        empId=${demande.employeTypeCongePK.employeId},
+                        typeId=${demande.employeTypeCongePK.typeCongeId},
+                        dateDebut=${#dates.format(demande.employeTypeCongePK.dateDebut, 'yyyy-MM-dd')}
+                    )}"
+                       class="btn btn-sm btn-info text-white me-2">
+                      <i class="fas fa-edit"></i> Éditer
+                    </a>
+                    <a th:href="@{/deleteDemandeConge/{empId}/{typeId}/{dateDebut}(empId=${demande.employeTypeCongePK.employeId}, typeId=${demande.employeTypeCongePK.typeCongeId}, dateDebut=${#dates.format(demande.employeTypeCongePK.dateDebut, 'yyyy-MM-dd')})}"
+                       class="btn btn-sm btn-danger"
+                       onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette demande ?')">
+                      <i class="fas fa-trash-alt"></i> Supprimer
+                    </a>
+                  </div>
+                </td>
+              </tr>
+
+              <tr th:if="${demandes == null or demandes.empty}">
+                <td colspan="6" class="text-center py-4 text-secondary">Aucune demande de congé soumise pour le moment.</td>
+              </tr>
+              </tbody>
+            </table>
+
+          </div>
+
+          <div class="d-block d-md-none" id="demande-list-mobile">
+            <div th:if="${demandes == null or demandes.empty}" class="text-center py-4 text-secondary">
+              Aucune demande de congé soumise pour le moment.
+            </div>
+
+            <div th:each="demande : ${demandes}" class="card mb-3 shadow-sm border-0">
+              <div class="card-body">
+                <h5 class="card-title fw-bold text-primary" th:text="${demande.employe.nom}"></h5>
+                <p class="card-text mb-1">
+                  <span class="badge bg-secondary me-2">Type:</span>
+                  <span th:text="${demande.typeConge.libelle}"></span>
+                </p>
+                <p class="card-text mb-1">
+                  <span class="badge bg-secondary me-2">Statut:</span>
+                  <span th:text="${demande.statut}"></span>
+                </p>
+                <p class="card-text mb-1 text-sm">
+                  <span class="badge bg-secondary me-2">Période:</span>
+                  Début: <span th:text="${#dates.format(demande.employeTypeCongePK.dateDebut, 'dd-MM-yyyy')}"></span>
+                  <br>Fin: <span th:text="${#dates.format(demande.dateFin, 'dd-MM-yyyy')}"></span>
+                </p>
+                <p class="card-text mb-3 text-sm">
+                  <span class="badge bg-secondary me-2">Motif:</span>
+                  <span th:text="${demande.motif}"></span>
+                </p>
+
+                <div class="d-flex justify-content-end">
+                  <a th:href="@{/editDemandeConge/{empId}/{typeId}/{dateDebut}(
+                              empId=${demande.employeTypeCongePK.employeId},
+                              typeId=${demande.employeTypeCongePK.typeCongeId},
+                              dateDebut=${#dates.format(demande.employeTypeCongePK.dateDebut, 'yyyy-MM-dd')}
+                          )}"
+                     class="btn btn-sm btn-info text-white me-2">
+                    <i class="fas fa-edit"></i> Éditer
+                  </a>
+                  <a th:href="@{/deleteDemandeConge/{empId}/{typeId}/{dateDebut}(empId=${demande.employeTypeCongePK.employeId}, typeId=${demande.employeTypeCongePK.typeCongeId}, dateDebut=${#dates.format(demande.employeTypeCongePK.dateDebut, 'yyyy-MM-dd')})}"
+                     class="btn btn-sm btn-danger"
+                     onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette demande ?')">
+                    <i class="fas fa-trash-alt"></i> Supprimer
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Pagination Controls -->
+          <div th:if="${totalPages != null and totalPages > 1}" class="mt-4">
+            <nav aria-label="Demande pagination">
+              <ul class="pagination justify-content-center">
+                <!-- Previous Button -->
+                <li class="page-item" th:classappend="${currentPageNumber == 0} ? 'disabled'">
+                  <a class="page-link"
+                     th:href="@{/demandeCongeFilter(
+           page=${currentPageNumber - 1},
+           size=5,
+           departement=${departement},
+           typeCongeId=${typeCongeId},
+           dateDebut=${dateDebut},
+           dateFin=${dateFin},
+           statut=${statut}
+       )}"
+                     th:if="${currentPageNumber > 0}">Précédent</a>
+                  <span class="page-link" th:if="${currentPageNumber == 0}">Précédent</span>
+                </li>
+
+                <!-- Page Numbers -->
+                <li th:each="i : ${#numbers.sequence(0, totalPages - 1)}"
+                    class="page-item" th:classappend="${i == currentPageNumber} ? 'active'">
+                  <a class="page-link"
+                     th:href="@{/demandeCongeFilter(
+           page=${i},
+           size=5,
+           departement=${departement},
+           typeCongeId=${typeCongeId},
+           dateDebut=${dateDebut},
+           dateFin=${dateFin},
+           statut=${statut}
+       )}"
+                     th:text="${i + 1}"></a>
+                </li>
+
+                <!-- Next Button -->
+                <li class="page-item" th:classappend="${currentPageNumber >= totalPages - 1} ? 'disabled'">
+                  <a class="page-link"
+                     th:href="@{/demandeCongeFilter(
+                     page=${currentPageNumber + 1},
+                     size=5,
+                     departement=${departement},
+                     typeCongeId=${typeCongeId},
+                     dateDebut=${dateDebut},
+                     dateFin=${dateFin},
+                     statut=${statut}
+                 )}"
+                     th:if="${currentPageNumber < totalPages - 1}">Suivant</a>
+                  <span class="page-link" th:if="${currentPageNumber >= totalPages - 1}">Suivant</span>
+                </li>
+              </ul>
+            </nav>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm" xmlns:th="http://www.thymeleaf.org">
+    <div class="container-fluid container-lg">
+        <a class="navbar-brand fw-bold" href="/">Gestion RH</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link"
+                       th:classappend="${currentPage == 'dashboard'} ? 'active' : ''"
+                       th:href="@{/}">Employes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link"
+                       th:classappend="${currentPage == 'typeConge'} ? 'active' : ''"
+                       th:href="@{/typeConge}">Type Conges</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link"
+                       th:classappend="${currentPage == 'demandeConge'} ? 'active' : ''"
+                       th:href="@{/demandeConge}">Demande Conge</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link"
+                       th:classappend="${currentPage == 'charts'} ? 'active' : ''"
+                       th:href="@{/charts}">Charts</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

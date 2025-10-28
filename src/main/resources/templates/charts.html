@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Statistiques RH</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<div class="container mt-5">
+    <h1 class="mb-4 text-center">📊 Statistiques RH</h1>
+
+    <div class="row g-4 mt-4">
+        <!-- Bar chart existant -->
+        <div class="col-md-6">
+            <div class="card shadow-sm p-4 h-100">
+                <h4 class="mb-3 text-center">Jours de congé consommés par département</h4>
+                <canvas id="joursParDepartementChart"></canvas>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card shadow-sm p-4 h-100">
+                <h4 class="mb-3 text-center">Nombre des demandes (Statut)</h4>
+                <canvas id="tauxAcceptationChart"></canvas>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card shadow-sm p-4 h-100">
+                <h4 class="mb-3 text-center">Demandes par type de congé</h4>
+                <canvas id="typeCongeChart"></canvas>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card shadow-sm p-4 h-100">
+                <h4 class="mb-3 text-center">Évolution des demandes par mois</h4>
+                <canvas id="demandesParMoisChart"></canvas>
+            </div>
+        </div>
+    </div>
+    <div style="height : 100px">
+
+    </div>
+</div>
+
+<div th:replace="fragments/footer :: footer"></div>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    const departements = /*[[${departements}]]*/ [];
+    const jours = /*[[${jours}]]*/ [];
+
+    new Chart(document.getElementById('joursParDepartementChart'), {
+        type: 'bar',
+        data: {
+            labels: departements,
+            datasets: [{
+                label: 'Jours consommés',
+                data: jours,
+                backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: { responsive: true, scales: { y: { beginAtZero: true } } }
+    });
+
+    const stats = {
+        enAttente: /*[[${enAttente}]]*/ 0,
+        acceptee:  /*[[${acceptee}]]*/ 0,
+        refusee:   /*[[${refusee}]]*/ 0,
+        annulee:   /*[[${annulee}]]*/ 0
+    };
+
+    new Chart(document.getElementById('tauxAcceptationChart'), {
+        type: 'pie',
+        data: {
+            labels: ['En attente', 'Acceptée', 'Refusée', 'Annulée'],
+            datasets: [{
+                data: [stats.enAttente, stats.acceptee, stats.refusee, stats.annulee],
+                backgroundColor: ['#FFC107', '#4CAF50', '#F44336', '#9E9E9E']
+            }]
+        },
+        options: { responsive: true }
+    });
+
+    const typeLabels = /*[[${typeCongeLabels}]]*/ [];
+    const typeData   = /*[[${typeCongeValues}]]*/ [];
+
+    new Chart(document.getElementById('typeCongeChart'), {
+        type: 'doughnut',
+        data: {
+            labels: typeLabels,
+            datasets: [{
+                data: typeData,
+                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0']
+            }]
+        },
+        options: { responsive: true }
+    });
+
+    const moisLabels = /*[[${moisLabels}]]*/ [];
+const moisValues = /*[[${moisValues}]]*/ [];
+   new Chart(document.getElementById('demandesParMoisChart'), {
+    type: 'line',
+    data: {
+        labels: moisLabels,
+        datasets: [{
+            label: 'Demandes par mois',
+            data: moisValues,
+            borderColor: 'rgba(75, 192, 192, 1)',
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            fill: true
+        }]
+    },
+    options: { responsive: true }
+});
+
+
+    /*]]>*/
+</script>
+
+</body>
+</html>
