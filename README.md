@@ -72,23 +72,23 @@ Les statistiques et les filtres tiennent compte du statut actuel.
 
 # 4. Modèle de données
 ## 4.1 Entités 
-- Employe :
-id : identifiant unique de l’employé
-nom : nom complet de l’employé
-departement : département d’affectation
-date_embauche : date d’entrée dans l’entreprise
+# Employe :
+- id : identifiant unique de l’employé
+- nom : nom complet de l’employé
+- departement : département d’affectation
+- date_embauche : date d’entrée dans l’entreprise
 
-- TypeConge
-id : identifiant unique du type de congé
-libelle : nom du type de congé (ex. : Congé annuel, Maladie, Maternité...)
-quota_annuel : nombre maximal de jours autorisés.
+# TypeConge
+- id : identifiant unique du type de congé
+- libelle : nom du type de congé (ex. : Congé annuel, Maladie, Maternité...)
+- quota_annuel : nombre maximal de jours autorisés.
 
-- DemandeConge
-id : identifiant unique de la demande
-date_debut : date de début du congé
-date_fin : date de fin du congé
-motif : raison du congé
-statut : état actuel de la demande (EN_ATTENTE, ACCEPTEE, REFUSEE, ANNULEE)
+# DemandeConge
+- id : identifiant unique de la demande
+- date_debut : date de début du congé
+- date_fin : date de fin du congé
+- motif : raison du congé
+- statut : état actuel de la demande (EN_ATTENTE, ACCEPTEE, REFUSEE, ANNULEE)
 
 
 
