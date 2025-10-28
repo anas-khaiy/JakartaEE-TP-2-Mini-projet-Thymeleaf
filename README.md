@@ -26,12 +26,9 @@ Thymeleaf pour le rendu côté serveur des pages HTML.
 HTML / CSS / Bootstrap 5 pour le design et la mise en page réactive.
 Chart.js pour les graphiques et visualisations statistiques.
 
-- Base de données :
-
-MySQL (8.0).
+- Base de données : MySQL (8.0).
 
 - Build / Gestion du projet :
-
 Maven pour la gestion des dépendances et le packaging de l’application.
 Configuration Spring Boot via application.properties.
 
