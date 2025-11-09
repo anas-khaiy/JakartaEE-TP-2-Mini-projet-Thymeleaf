@@ -127,6 +127,14 @@ https://www.youtube.com/watch?v=I2vzgu6-Cqs
 
 <iframe src="https://www.youtube.com/watch?v=I2vzgu6-Cqs"></iframe>
 
+<iframe width="560" height="315" 
+        src="https://www.youtube.com/embed/I2vzgu6-Cqs" 
+        title="YouTube video player" 
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+</iframe>
+
 # 7. Auteurs / Encadrement
 - Anas Khaiy
 - Encadrant : Dr. Mohamed LACHGAR / module : Développement Web et multiplateforme / établissement : ENS Marrakech.
