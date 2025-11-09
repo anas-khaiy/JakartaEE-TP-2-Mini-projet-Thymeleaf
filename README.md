@@ -125,6 +125,8 @@ Les statistiques et les filtres tiennent compte du statut actuel.
 # 6. Démonstration (Vidéo)
 https://www.youtube.com/watch?v=I2vzgu6-Cqs
 
+<iframe src="https://www.youtube.com/watch?v=I2vzgu6-Cqs"></iframe>
+
 # 7. Auteurs / Encadrement
 - Anas Khaiy
 - Encadrant : Dr. Mohamed LACHGAR / module : Développement Web et multiplateforme / établissement : ENS Marrakech.
